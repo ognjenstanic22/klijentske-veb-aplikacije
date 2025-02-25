@@ -16,7 +16,7 @@ export class HomeComponent {
   
   constructor(){
     FlightService.getFlights()
-      .then(rsp => this.flights = rsp.data)
+      .then(rsp => this.flights = rsp.data.content)
       .catch((e:AxiosError) => this.error = `${e.code} ${e.message}`)
   }
 
