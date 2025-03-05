@@ -1,15 +1,16 @@
 import { UserModel } from "../models/user.model"
 
-export class UserService{
+export class UserService {
 
-    static retrieveUsers(): UserModel[]{
-        if(!localStorage.getItem('users')){
+    static retrieveUsers(): UserModel[] {
+        if (!localStorage.getItem('users')) {
             const arr: UserModel[] = [
-            { 
-                email: 'user@example.com',
-                password: 'user123',
-                orders:[]
-            }]
+                {
+                    email: 'user@example.com',
+                    password: 'user123',
+                    orders: []
+                }
+            ]
 
             localStorage.setItem('users', JSON.stringify(arr))
         }
@@ -17,30 +18,27 @@ export class UserService{
         return JSON.parse(localStorage.getItem('users')!)
     }
 
-    static login(email: string, password: string): boolean{
-
-        for(let user of this.retrieveUsers()){
-            if(user.email === email && user.password === password){
+    static login(email: string, password: string): boolean {
+        for (let user of this.retrieveUsers()) {
+            if (user.email === email && user.password === password) {
                 localStorage.setItem('active', user.email)
                 return true
             }
-
         }
 
         return false
     }
 
-    static getActiveUser(): UserModel | null{
-        if (localStorage.getItem('active'))
-             return null
+    static getActiveUser(): UserModel | null {
+        if (!localStorage.getItem('active')) 
+            return null
 
-        for(let user of this.retrieveUsers()){
-            if(user.email === localStorage.getItem('active')){
-               return user
+        for (let user of this.retrieveUsers()) {
+            if (user.email == localStorage.getItem('active')) {
+                return user
             }
-     }
+        }
 
-     return null
+        return null
     }
-
 }

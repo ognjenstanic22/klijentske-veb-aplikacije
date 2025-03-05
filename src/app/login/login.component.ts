@@ -18,16 +18,20 @@ export class LoginComponent {
   public email: string = ''
   public password: string = ''
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    if (UserService.getActiveUser()) {
+      router.navigate(['/user'])
+      return
+    }
+  }
 
   public doLogin() {
     if (UserService.login(this.email, this.password)) {
-      // Redirect to user component
-      this.router.navigate(['/about'])
+      // Redirect to user to profile
+      this.router.navigate(['/user'])
       return
     }
 
     alert('Bad email or password')
   }
 }
- 
