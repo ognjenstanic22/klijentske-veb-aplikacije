@@ -2,12 +2,11 @@ html,
 body {
     height: 100%;
     background-color: #1e2124;
-    color:white;
-
+    color: white;
 }
 
-a{
-    color: gray
+a {
+    color: gray;
 }
 
 body {
@@ -16,10 +15,10 @@ body {
 }
 
 .container {
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 30px;
 }
 
 .example-card {
@@ -33,7 +32,7 @@ body {
     align-items: center;
 }
 
-.wrapper{
+.wrapper {
     margin-top: 30px;
     max-width: 80%;
     margin-left: auto;
@@ -47,6 +46,6 @@ body {
     margin-right: auto;
 }
 
-.full-width{
+.full-width {
     width: 100%;
 }

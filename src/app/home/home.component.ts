@@ -24,9 +24,4 @@ export class HomeComponent {
       .then(rsp => this.flights = rsp.data.content)
       .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
   }
-
-  public generateDestinationImage(dest: string) {
-    return `https://img.pequla.com/destination/${dest.split(' ')[0].toLowerCase()}.jpg`
-  }
-
 }

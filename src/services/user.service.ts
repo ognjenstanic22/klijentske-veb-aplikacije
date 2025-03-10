@@ -1,3 +1,4 @@
+import { OrderModel } from "../models/order.model"
 import { UserModel } from "../models/user.model"
 
 export class UserService {
@@ -30,7 +31,7 @@ export class UserService {
     }
 
     static getActiveUser(): UserModel | null {
-        if (!localStorage.getItem('active')) 
+        if (!localStorage.getItem('active'))
             return null
 
         for (let user of this.retrieveUsers()) {
@@ -40,6 +41,57 @@ export class UserService {
         }
 
         return null
+    }
+
+    static createOrder(order: OrderModel) {
+        const arr = this.retrieveUsers()
+        for (let user of arr) {
+            if (user.email == localStorage.getItem('active')) {
+                user.orders.push(order)
+                localStorage.setItem('users', JSON.stringify(arr))
+                return true
+            }
+        }
+
+        return false
+    }
+
+    static changeOrderStatus(state: 'ordered' | 'paid' | 'canceled', id: number) {
+        const active = this.getActiveUser()
+        if (active) {
+            const arr = this.retrieveUsers()
+            for (let user of arr) {
+                if (user.email == active.email) {
+                    for (let order of user.orders) {
+                        if (order.id == id) {
+                            order.status = state
+                        }
+                    }
+                    localStorage.setItem('users', JSON.stringify(arr))
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    static changeRating(r: boolean, id: number) {
+        const active = this.getActiveUser()
+        if (active) {
+            const arr = this.retrieveUsers()
+            for (let user of arr) {
+                if (user.email == active.email) {
+                    for (let order of user.orders) {
+                        if (order.id == id && order.status == 'paid') {
+                            order.rating = r
+                        }
+                    }
+                    localStorage.setItem('users', JSON.stringify(arr))
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     static changePassword(newPassword: string): boolean {

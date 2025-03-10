@@ -1,6 +1,6 @@
-export interface FlightModel{
+export interface FlightModel {
     id: number
-    type:{
+    type: {
         id: number
         name: string
     }
@@ -8,9 +8,9 @@ export interface FlightModel{
     flightNumber: string
     destination: string
     scheduledAt: string
-    estimatedAt: null | string 
+    estimatedAt: null | string
     connectedType: string
-    connectedFlight: string
+    connectedFlight: string,
     plane: string
     gate: null | string
     terminal: string
