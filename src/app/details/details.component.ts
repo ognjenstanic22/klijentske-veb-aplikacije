@@ -12,7 +12,13 @@ import { SafePipe } from "../safe.pipe";
 
 @Component({
   selector: 'app-details',
-  imports: [NgIf, LoadingComponent, MatCardModule, MatListModule, MatButtonModule, SafePipe, RouterLink],
+  imports: [NgIf,
+            LoadingComponent,
+            MatCardModule,
+            MatListModule,
+            MatButtonModule,
+            SafePipe,
+            RouterLink, ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css'
 })
