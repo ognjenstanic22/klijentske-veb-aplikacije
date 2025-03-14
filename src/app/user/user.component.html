@@ -1,5 +1,5 @@
 <div class="wrapper" *ngIf="user">
-
+ 
     <mat-card class="user-card" appearance="outlined">
         <mat-card-header>
             <img mat-card-avatar class="example-header-image" [src]="['https://ui-avatars.com/api/?name='+user.email]">
@@ -17,59 +17,97 @@
                             <i class="fa-solid fa-key"></i>&nbsp;Change Password
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <mat-form-field>
+                    <mat-form-field class="full-width">
                         <mat-label>Old password</mat-label>
                         <input matInput type="password" [(ngModel)]="oldPasswordValue" />
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field class="full-width">
                         <mat-label>New password</mat-label>
                         <input matInput type="password" [(ngModel)]="newPasswordValue" />
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field class="full-width">
                         <mat-label>Repeat password</mat-label>
                         <input matInput type="password" [(ngModel)]="repeatPasswordValue" />
                     </mat-form-field>
                     <button mat-button (click)="doChangePassword()">
-                         Sumbit
+                        <i class="fa-solid fa-paper-plane"></i> Sumbit
+                    </button>
+                </mat-expansion-panel>
+                <mat-expansion-panel *ngIf="userCopy">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <i class="fa-solid fa-user-tag"></i>&nbsp;Update profile
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field class="full-width">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" [(ngModel)]="userCopy.email" disabled/>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>First Name</mat-label>
+                        <input matInput type="text" [(ngModel)]="userCopy.firstName" />
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput type="text" [(ngModel)]="userCopy.lastName" />
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Phone</mat-label>
+                        <input matInput type="tel" [(ngModel)]="userCopy.phone" />
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Address</mat-label>
+                        <input matInput type="text" [(ngModel)]="userCopy.address" />
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Select Favourite Destination</mat-label>
+                        <mat-select [(ngModel)]="userCopy.favouriteDestination">
+                            <mat-option *ngFor="let dest of destinationList" [value]="dest">
+                                {{dest}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <button mat-button (click)="doUpdateUser()">
+                        <i class="fa-solid fa-paper-plane"></i> Update
                     </button>
                 </mat-expansion-panel>
             </mat-accordion>
         </mat-card-content>
     </mat-card>
-
+ 
     <mat-card appearance="outlined" *ngIf="user.orders.length == 0" class="no-order">
         <mat-card-content>
             <h1>You have no orders yet!</h1>
             <p>To place an order visit the <a routerLink="/searh" class="cyan">search page</a></p>
         </mat-card-content>
     </mat-card>
-
+ 
     <div *ngIf="user.orders.length > 0">
         <div *ngIf="user.orders">
             <h1>Order List</h1>
             <table mat-table [dataSource]="user.orders" class="mat-elevation-z8">
-
+ 
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef>
                         <i class="fa-solid fa-hashtag"></i> ID
                     </th>
                     <td mat-cell *matCellDef="let element"> {{element.flightId}} </td>
                 </ng-container>
-
+ 
                 <ng-container matColumnDef="destination">
                     <th mat-header-cell *matHeaderCellDef>
                         <i class="fa-solid fa-map-location-dot"></i> Destination
                     </th>
                     <td mat-cell *matCellDef="let element"> {{element.destination}} </td>
                 </ng-container>
-
+ 
                 <ng-container matColumnDef="flightNumber">
                     <th mat-header-cell *matHeaderCellDef>
                         <i class="fa-solid fa-plane-circle-exclamation"></i> Flight Number
                     </th>
                     <td mat-cell *matCellDef="let element"> {{element.flightNumber}} </td>
                 </ng-container>
-
+ 
                 <ng-container matColumnDef="airline">
                     <th mat-header-cell *matHeaderCellDef>
                         <i class="fa-solid fa-plane"></i> Airline
@@ -78,7 +116,7 @@
                         {{element.airline.name}}
                     </td>
                 </ng-container>
-
+ 
                 <ng-container matColumnDef="count">
                     <th mat-header-cell *matHeaderCellDef>
                         <i class="fa-solid fa-arrow-up-wide-short"></i> Count
@@ -87,7 +125,7 @@
                         {{element.count}}
                     </td>
                 </ng-container>
-
+ 
                 <ng-container matColumnDef="price">
                     <th mat-header-cell *matHeaderCellDef>
                         <i class="fa-solid fa-tag"></i> Price Per Ticket
@@ -96,7 +134,7 @@
                         {{element.pricePerItem}} <i class="fa-solid fa-euro-sign"></i>
                     </td>
                 </ng-container>
-
+ 
                 <ng-container matColumnDef="total">
                     <th mat-header-cell *matHeaderCellDef>
                         <i class="fa-solid fa-hand-holding-dollar"></i> Total
@@ -105,7 +143,7 @@
                         {{element.pricePerItem*element.count}} <i class="fa-solid fa-euro-sign"></i>
                     </td>
                 </ng-container>
-
+ 
                 <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef>
                         <i class="fa-regular fa-chart-bar"></i> Status
@@ -125,7 +163,7 @@
                         </div>
                     </td>
                 </ng-container>
-
+ 
                 <ng-container matColumnDef="rating">
                     <th mat-header-cell *matHeaderCellDef>
                         <i class="fa-solid fa-star"></i> Rating
@@ -142,7 +180,7 @@
                         </div>
                     </td>
                 </ng-container>
-
+ 
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef>
                         <i class="fa-solid fa-location-arrow"></i> Actions
@@ -169,7 +207,7 @@
                         </div>
                     </td>
                 </ng-container>
-
+ 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
